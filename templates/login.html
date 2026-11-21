@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block titulo %}Entrar{% endblock %}{% block conteudo %}
+<section class="small">
+    <h1>Entrar</h1>
+    <form method="post" class="gridform">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>E-mail <input type="email" name="email" required></label>
+        <label>Senha <input type="password" name="senha" required></label><button>Entrar</button>
+    </form>
+    <p>Não possui conta? <a href="{{ url_for('auth.cadastro') }}">Cadastre-se</a></p>
+</section>{% endblock %}
