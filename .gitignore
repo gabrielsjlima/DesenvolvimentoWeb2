@@ -18,3 +18,4 @@ instance/
 # Editores
 .vscode/
 .idea/
+.DS_Store
