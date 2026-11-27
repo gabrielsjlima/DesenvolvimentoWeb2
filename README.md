@@ -2,26 +2,21 @@
 
 **Aluno:** Gabriel Sebastião Jordão de Lima  
 **Disciplina:** Desenvolvimento Web II — FATEC Porto Ferreira  
-**Repositório original:** https://github.com/gabrielsjlima/DesenvolvimentoWeb2
+**Repositório:** https://github.com/gabrielsjlima/DesenvolvimentoWeb2
 
-## Endpoints REST
+## Documentação e estrutura
 
-- `GET /api/eventos` — lista os eventos; resposta 200.
-- `GET /api/eventos/<id>` — consulta evento; 200 ou 404.
-- `POST /api/eventos` — cria evento; 201, 400, 401 ou 415.
-- `PUT /api/eventos/<id>` — substitui campos; 200, 400, 401 ou 404.
-- `PATCH /api/eventos/<id>` — altera campos selecionados; 200, 400, 401 ou 404.
-- `DELETE /api/eventos/<id>` — remove; 204 ou 404.
-- `GET /api/feriados/<ano>` — consome BrasilAPI; 200, 400 ou 502.
-
-## Estrutura
-
-- `app.py`: inicializa app e banco.
-- `controllers/`: rotas do site, autenticação e API.
-- `models/`: entidades ORM.
-- `dao/`: consulta e persistência de eventos.
-- `templates/`: HTML Jinja2.
-- `static/`: CSS e AJAX/Fetch.
+- [Documentação detalhada da API REST](docs/API.md)
+- [Regras de negócio](docs/regras-negocio.md)
+- [DER simplificado](docs/DER.md)
+- `app.py`: criação e inicialização da aplicação Flask.
+- `controllers/`: rotas de interface, autenticação e API.
+- `models/`: entidades SQLAlchemy.
+- `dao/`: consultas e persistência de eventos.
+- `templates/`: páginas HTML Jinja2.
+- `static/`: estilos e Fetch/AJAX.
 - `tests/`: testes automatizados.
-- `docs/`: regras de negócio; mantenha o DER original no diretório `docs/DER/`.
 
+## Versionamento — Etapa 5
+
+O fluxo esperado é criar uma branch específica, fazer commits, abrir pull request para `main`, revisar e fazer merge. As tags `etapa-1` a `etapa-4` devem apontar para commits pertinentes às etapas, respeitando o histórico real do projeto.

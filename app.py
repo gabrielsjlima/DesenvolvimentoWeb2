@@ -7,9 +7,13 @@ from extensions import db
 def create_app(test_config=None):
     app = Flask(__name__)
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
+    database_url = os.environ.get('DATABASE_URL') or 'sqlite:///' + str(Path(app.instance_path) / 'eventos.db')
+    if database_url.startswith(('postgres://', 'postgresql://')):
+        database_url = 'postgresql+psycopg://' + database_url.split('://', 1)[1]
     app.config.update(
         SECRET_KEY=os.environ.get('SECRET_KEY') or secrets.token_hex(32),
-        SQLALCHEMY_DATABASE_URI='sqlite:///' + str(Path(app.instance_path) / 'eventos.db'),
+        SQLALCHEMY_DATABASE_URI=database_url,
+        SESSION_COOKIE_SECURE=os.environ.get('RENDER') == 'true',
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE='Lax',
