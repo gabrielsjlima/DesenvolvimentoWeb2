@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block conteudo %}<section class="small">
+    <h1>Editar evento</h1>
+    <form method="post" class="gridform"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Nome <input name="nome" value="{{ evento.nome }}" required maxlength="120"></label>
+        <label>Data <input name="data" type="date" value="{{ evento.data }}" required></label>
+        <label>Local <input name="local" value="{{ evento.local or '' }}"></label>
+        <label>Vagas <input name="vagas" type="number" min="0" value="{{ evento.vagas or 0 }}"
+                required></label><button>Salvar alterações</button>
+        <a href="{{ url_for('evento.index') }}">Cancelar</a>
+    </form>
+</section>{% endblock %}

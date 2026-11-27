@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block titulo %}Eventos Acadêmicos{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header><a href="{{ url_for('evento.index') }}">Eventos Acadêmicos</a>
+        <nav>
+            {% if usuario_atual %}Olá, {{ usuario_atual.nome }}
+            <form method="post" action="{{ url_for('auth.logout') }}" class="inline"><input type="hidden"
+                    name="csrf_token" value="{{ csrf_token() }}"><button>Sair</button></form>
+            {% else %}<a href="{{ url_for('auth.login') }}">Entrar</a> <a href="{{ url_for('auth.cadastro') }}">Criar
+                conta</a>{% endif %}
+        </nav>
+    </header>
+    <main>{% with msgs = get_flashed_messages(with_categories=true) %}{% for tipo,msg in msgs %}<p role="status"
+            class="alerta {{ tipo }}">{{ msg }}</p>{% endfor %}{% endwith %}
+        {% block conteudo %}{% endblock %}</main>
+    <footer>FATEC Porto Ferreira · Desenvolvimento Web II</footer>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

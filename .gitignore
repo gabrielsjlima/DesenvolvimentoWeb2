@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.coverage
+# Banco local e dados persistentes
+instance/
+*.db
+*.sqlite
+*.sqlite3
+# Arquivos locais do macOS
+.DS_Store
+# Editores
+.vscode/
+.idea/

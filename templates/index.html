@@ -1,0 +1,49 @@
+{% extends 'base.html' %}{% block conteudo %}
+<h1>Sistema de Gestão de Eventos Acadêmicos</h1>
+{% if usuario_atual %}<section>
+    <h2>Cadastrar evento</h2>
+    <form method="post" action="{{ url_for('evento.cadastrar') }}" class="gridform">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Nome <input name="nome" required maxlength="120"></label>
+        <label>Data <input name="data" type="date" required></label>
+        <label>Local <input name="local" maxlength="120"></label>
+        <label>Vagas <input name="vagas" type="number" min="0" value="30" required></label>
+        <button>Cadastrar</button>
+    </form>
+</section>{% else %}
+<p><a href="{{ url_for('auth.login') }}">Faça login</a> para cadastrar, editar e excluir eventos.</p>{% endif %}
+<section>
+    <div class="flex">
+        <h2>Agenda de eventos</h2><button id="atualizar" type="button">Atualizar via AJAX</button>
+    </div>
+    <p id="status-api" role="status"></p>
+    <div id="eventos">{% for e in eventos %}
+        <article>
+            <h3>{{ e.nome }}</h3>
+            <p>{{ e.data }} · {{ e.local or 'Local não informado' }} · {{ e.vagas or 0 }} vagas</p>
+            {% if usuario_atual %}<a href="{{ url_for('evento.editar', evento_id=e.id) }}">Editar</a>
+            <form method="post" action="{{ url_for('evento.excluir', evento_id=e.id) }}" class="inline">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button
+                    class="perigo">Excluir</button>
+            </form>{% endif %}
+            <details>
+                <summary>Inscrever participante</summary>
+                <form method="post" action="{{ url_for('evento.inscrever', evento_id=e.id) }}" class="gridform">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label>Nome <input name="nome" required></label><label>E-mail <input name="email" type="email"
+                            required></label><button>Inscrever</button>
+                </form>
+            </details>
+        </article>
+        {% else %}<p>Nenhum evento cadastrado.</p>{% endfor %}
+    </div>
+</section>
+<section>
+    <h2>Consultar feriados nacionais (BrasilAPI)</h2>
+    <form id="form-feriados"><label>Ano <input id="ano" type="number" min="2000" max="2100" value="2026"
+                required></label><button>Consultar</button></form>
+    <p id="status-feriados" role="status"></p>
+    <ul id="feriados"></ul>
+</section>
+{% endblock %}{% block scripts %}
+<script src="{{ url_for('static', filename='app.js') }}" defer></script>{% endblock %}
